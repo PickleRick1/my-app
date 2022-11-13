@@ -1,3 +1,43 @@
+/* Обнуляющий стиль */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+li {
+	list-style: none;
+}
+a {
+	color: inherit;
+}
+a,
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: inherit;
+	font-size: inherit;
+}
+img {
+	vertical-align: top;
+}
+body,
+html {
+	height: 100%;
+	line-height: 1;
+}
+
 .app-wrapper{
   margin:0 auto;
   display: grid;
@@ -9,21 +49,5 @@
   grid-gap:10px;
   width: 1200px;
 }
-.header{
-  grid-area: h;
-  background-color: green;
-}
-.header img{
-  width: 20px;
-}
-.nav{
-  grid-area: n;
-  background: peru;
-}
-.content{
-  grid-area: c;
-  background: red;
-}
-.content img{
-  width: 100%;
-}
+
+
