@@ -1,11 +1,17 @@
 
 import s from './Post.module.css';
-const Post = () => {
+const Post = (props) => {
 	return (
 		<div className={s.item}>
-			<img src="https://media.newyorker.com/photos/5f01e383b975762d612e0ff3/master/w_2560%2Cc_limit/Barasch-Avatar.jpg" alt="" /> post 1
+			<div className={s.post__description}>
+				<div>
+					<img src="https://media.newyorker.com/photos/5f01e383b975762d612e0ff3/master/w_2560%2Cc_limit/Barasch-Avatar.jpg" alt="" />
+				</div>
+				<div className={s.post__text}>{props.message}</div>
+
+			</div>
 			<div>
-				<span>Like</span>
+				<span>{props.likeCounter} Likes</span>
 			</div>
 		</div>
 	)

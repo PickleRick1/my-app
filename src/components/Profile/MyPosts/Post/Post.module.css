@@ -1,8 +1,19 @@
 .item{
 	color:aqua;
+	padding: 10px 0 0 10px;
+}
+.item:not(:last-child){
+	margin-bottom: 10px;
 }
 .item img{
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
+}
+.post__description{
+	display: flex;
+	align-items: center;
+}
+.post__text{
+	margin: 0 0 0 10px;
 }
