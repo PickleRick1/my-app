@@ -17,3 +17,6 @@
 .menu__item:hover{
 	color: blue;
 }
+.active{
+	color:blue;
+}
