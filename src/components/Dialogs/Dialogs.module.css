@@ -22,11 +22,21 @@
 	gap:0  10px;
     align-items: center;
 }
-
+.message_order{
+	order: 3;
+}
 .message__image{
 	height: 50px;
 	width: 50px;
 	border-radius: 50%;
 }
+
 .message__text{
+}
+.message__text_right{
+	order: 2;
+	justify-self: right;
+}
+.div__null{
+	order:1;
 }
