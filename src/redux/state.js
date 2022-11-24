@@ -1,10 +1,15 @@
+let rerenderEntireTree = () => {
+	console.log('state changed');
+}
+
 let state = {
 	profilePage: {
 		posts: [
 			{ id: 1, message: 'Hey, how are you?', likeCounter: 15 },
 			{ id: 2, message: "It's me first program", likeCounter: 23 },
 			{ id: 3, message: "And it's my first using of props", likeCounter: 1 },
-		]
+		],
+		newPostText: '',
 	},
 	dialogsPage: {
 		dialogs: [
@@ -20,7 +25,8 @@ let state = {
 			{ id: 2, message: 'How are you?', imgSrc: 'https://avatars.mds.yandex.net/i?id=d4b324f1da4a92a4db330db10469c2b8b2f483d6-7106899-images-thumbs&n=13&exp=1' },
 			{ id: 3, message: 'Yo', imgSrc: 'https://avatars.mds.yandex.net/i?id=4abb9ac3da700fdce7f32cc58eb14bb598cbe38c-7051630-images-thumbs&n=13&exp=1' },
 			{ id: 4, message: 'Yo', imgSrc: 'https://avatars.mds.yandex.net/i?id=d4b324f1da4a92a4db330db10469c2b8b2f483d6-7106899-images-thumbs&n=13&exp=1' },
-		]
+		],
+		newMessageText: '',
 	},
 	sidebar: {
 		paths: [
@@ -36,5 +42,37 @@ let state = {
 			{ id: 3, imgSrc: 'https://avatars.mds.yandex.net/i?id=534a19c1077c2f438e9053210a63c1f007beb5de-5648447-images-thumbs&n=13&exp=1', name: 'Daria' },
 		]
 	}
+}
+export let addMessage = () => {
+	let newMessageObj = {
+		id: 5,
+		message: state.dialogsPage.messages.newMessageText,
+		imgSrc: 'https://avatars.mds.yandex.net/i?id=d4b324f1da4a92a4db330db10469c2b8b2f483d6-7106899-images-thumbs&n=13&exp=1',
+	}
+	state.dialogsPage.messages.push(newMessageObj);
+	state.dialogsPage.messages.newMessageText = '';
+	rerenderEntireTree(state);
+}
+export let updateMessage = (text) => {
+	state.dialogsPage.messages.newMessageText = text;
+	rerenderEntireTree(state);
+}
+export let addPost = () => {
+	let newPost = {
+		id: 4,
+		message: state.profilePage.newPostText,
+		likeCounter: 0
+	}
+	state.profilePage.posts.push(newPost);
+	state.profilePage.newPostText = '';
+	rerenderEntireTree(state);
+}
+export let updatePost = (newText) => {
+	state.profilePage.newPostText = newText;
+	rerenderEntireTree(state);
+}
+
+export const subscribe = (observer) => {
+	rerenderEntireTree = observer;
 }
 export default state;
