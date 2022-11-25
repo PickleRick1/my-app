@@ -13,11 +13,13 @@ const MyPosts = (props) => {
 		let text = newPostElement.current.value;
 		props.updatePost(text);
 	}
+	debugger
 	return (
 		<div className={s.posts}>
 			myposts
 			<div>
 				<textarea ref={newPostElement} onChange={onPostChange} value={props.newPostText} />
+
 			</div>
 			<div>
 				<button onClick={addPost}>Add post</button>
@@ -25,5 +27,6 @@ const MyPosts = (props) => {
 			{postElements}
 		</div>
 	)
+
 }
 export default MyPosts;
