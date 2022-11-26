@@ -47,41 +47,40 @@ let store = {
 	getState() {
 		return this._state;
 	},
-	addMessage() {
-		let newMessage = {
-			id: 5,
-			message: this._state.dialogsPage.newMessageText,
-			imgSrc: 'https://avatars.mds.yandex.net/i?id=4abb9ac3da700fdce7f32cc58eb14bb598cbe38c-7051630-images-thumbs&n=13&exp=1',
-		}
-		this._state.dialogsPage.messages.push(newMessage);
-		this._state.dialogsPage.newMessageText = '';
-		this._subscriber();
-	},
-	updateMessage(value) {
-		this._state.dialogsPage.newMessageText = value;
-		this._subscriber();
-	},
-	_setNewPost(value) {
-		return this._state.profilePage.posts.push(value);
-	},
-	addPost() {
-		let newPost = {
-			id: 4,
-			message: this._state.profilePage.newPostText,
-			likeCounter: 0
-		}
-		this._state.profilePage.posts.push(newPost);
-		this._state.profilePage.newPostText = '';
-		this._subscriber();
-	},
-	updatePost(newText) {
-		this._state.profilePage.newPostText = newText;
-		this._subscriber();
-	},
 	subscribe(observer) {
 		this._subscriber = observer;
 	},
-
+	dispatch(action) {
+		switch (action.type) {
+			case 'ADD-POST': {
+				let newPost = {
+					id: 4,
+					message: this._state.profilePage.newPostText,
+					likeCounter: 0
+				}
+				this._state.profilePage.posts.push(newPost);
+				this._state.profilePage.newPostText = '';
+				this._subscriber();
+				break;
+			}
+			case 'UPDATE-POST': this._state.profilePage.newPostText = action.newText;
+				this._subscriber();
+				break;
+			case 'ADD-MESSAGE':
+				let newMessage = {
+					id: 5,
+					message: this._state.dialogsPage.newMessageText,
+					imgSrc: 'https://avatars.mds.yandex.net/i?id=4abb9ac3da700fdce7f32cc58eb14bb598cbe38c-7051630-images-thumbs&n=13&exp=1',
+				}
+				this._state.dialogsPage.messages.push(newMessage);
+				this._state.dialogsPage.newMessageText = '';
+				this._subscriber();
+				break;
+			case 'UPDATE-MESSAGE': this._state.dialogsPage.newMessageText = action.value;
+				this._subscriber();
+				break;
+		}
+	},
 }
 window.store = store;
 export default store;

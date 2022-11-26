@@ -10,11 +10,11 @@ const Dialogs = (props) => {
 	let messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message} id={m.id} imgSrc={m.imgSrc} />);
 	let newMessage = React.createRef();
 	let sendMessage = () => {
-		props.addMessage();
+		props.dispatch({ type: 'ADD-MESSAGE' });
 	};
 	let onMessageChange = () => {
 		let text = newMessage.current.value;
-		props.updateMessage(text);
+		props.dispatch({ type: 'UPDATE-MESSAGE', value: text });
 	}
 	return (
 		<div>
