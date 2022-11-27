@@ -3,6 +3,7 @@ import Dialog from './Dialog/Dialog';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
 import React from 'react';
+import { addMessageAcrionCreator, updateMessageAcrionCreator } from '../../redux/state';
 
 const Dialogs = (props) => {
 
@@ -10,11 +11,11 @@ const Dialogs = (props) => {
 	let messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message} id={m.id} imgSrc={m.imgSrc} />);
 	let newMessage = React.createRef();
 	let sendMessage = () => {
-		props.dispatch({ type: 'ADD-MESSAGE' });
+		props.dispatch(addMessageAcrionCreator());
 	};
 	let onMessageChange = () => {
 		let text = newMessage.current.value;
-		props.dispatch({ type: 'UPDATE-MESSAGE', value: text });
+		props.dispatch(updateMessageAcrionCreator(text));
 	}
 	return (
 		<div>

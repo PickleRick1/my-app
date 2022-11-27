@@ -2,16 +2,17 @@
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import React from 'react';
+import { addPostActionCreator, updatePostActionCreator } from '../../../redux/state'
 
 const MyPosts = (props) => {
 	let newPostElement = React.createRef();
 	let postElements = props.posts.map(p => <Post message={p.message} likeCounter={p.likeCounter} />);
 	let addPost = () => {
-		props.dispatch({ type: 'ADD-POST' });
+		props.dispatch(addPostActionCreator());
 	}
 	let onPostChange = () => {
 		let text = newPostElement.current.value;
-		props.dispatch({ type: 'UPDATE-POST', newText: text });
+		props.dispatch(updatePostActionCreator(text));
 	}
 	return (
 		<div className={s.posts}>

@@ -1,3 +1,9 @@
+const ADD_POST = 'ADD-POST';
+const UPDATE_POST = 'UPDATE-POST';
+const ADD_MESSAGE = 'ADD-MESSAGE';
+const UPDATE_MESSAGE = 'UPDATE-MESSAGE';
+
+
 
 let store = {
 	_subscriber() {
@@ -52,7 +58,7 @@ let store = {
 	},
 	dispatch(action) {
 		switch (action.type) {
-			case 'ADD-POST': {
+			case ADD_POST: {
 				let newPost = {
 					id: 4,
 					message: this._state.profilePage.newPostText,
@@ -63,10 +69,10 @@ let store = {
 				this._subscriber();
 				break;
 			}
-			case 'UPDATE-POST': this._state.profilePage.newPostText = action.newText;
+			case UPDATE_POST: this._state.profilePage.newPostText = action.newText;
 				this._subscriber();
 				break;
-			case 'ADD-MESSAGE':
+			case ADD_MESSAGE:
 				let newMessage = {
 					id: 5,
 					message: this._state.dialogsPage.newMessageText,
@@ -76,11 +82,32 @@ let store = {
 				this._state.dialogsPage.newMessageText = '';
 				this._subscriber();
 				break;
-			case 'UPDATE-MESSAGE': this._state.dialogsPage.newMessageText = action.value;
+			case UPDATE_MESSAGE: this._state.dialogsPage.newMessageText = action.value;
 				this._subscriber();
 				break;
 		}
 	},
+}
+
+export const addPostActionCreator = () => {
+	return {
+		type: ADD_POST
+	}
+}
+export const updatePostActionCreator = (text) => {
+	return {
+		type: UPDATE_POST, newText: text
+	}
+}
+export const addMessageAcrionCreator = () => {
+	return {
+		type: ADD_MESSAGE
+	}
+}
+export const updateMessageAcrionCreator = (text) => {
+	return {
+		type: UPDATE_MESSAGE, value: text
+	}
 }
 window.store = store;
 export default store;
