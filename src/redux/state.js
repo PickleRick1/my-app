@@ -1,7 +1,6 @@
-const ADD_POST = 'ADD-POST';
-const UPDATE_POST = 'UPDATE-POST';
-const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_MESSAGE = 'UPDATE-MESSAGE';
+import profileReducer from "./profileReducer";
+import dialogsReducer from "./dialogsReducer";
+import sidebarReducer from "./sidebarReducer";
 
 
 
@@ -57,58 +56,13 @@ let store = {
 		this._subscriber = observer;
 	},
 	dispatch(action) {
-		switch (action.type) {
-			case ADD_POST: {
-				let newPost = {
-					id: 4,
-					message: this._state.profilePage.newPostText,
-					likeCounter: 0
-				}
-				this._state.profilePage.posts.push(newPost);
-				this._state.profilePage.newPostText = '';
-				this._subscriber();
-				break;
-			}
-			case UPDATE_POST: this._state.profilePage.newPostText = action.newText;
-				this._subscriber();
-				break;
-			case ADD_MESSAGE:
-				let newMessage = {
-					id: 5,
-					message: this._state.dialogsPage.newMessageText,
-					imgSrc: 'https://avatars.mds.yandex.net/i?id=4abb9ac3da700fdce7f32cc58eb14bb598cbe38c-7051630-images-thumbs&n=13&exp=1',
-				}
-				this._state.dialogsPage.messages.push(newMessage);
-				this._state.dialogsPage.newMessageText = '';
-				this._subscriber();
-				break;
-			case UPDATE_MESSAGE: this._state.dialogsPage.newMessageText = action.value;
-				this._subscriber();
-				break;
-		}
+		this._state.profilePage = profileReducer(this._state.profilePage, action);
+		this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+		this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+		this._subscriber();
 	},
 }
 
-export const addPostActionCreator = () => {
-	return {
-		type: ADD_POST
-	}
-}
-export const updatePostActionCreator = (text) => {
-	return {
-		type: UPDATE_POST, newText: text
-	}
-}
-export const addMessageAcrionCreator = () => {
-	return {
-		type: ADD_MESSAGE
-	}
-}
-export const updateMessageAcrionCreator = (text) => {
-	return {
-		type: UPDATE_MESSAGE, value: text
-	}
-}
 window.store = store;
 export default store;
 /*
