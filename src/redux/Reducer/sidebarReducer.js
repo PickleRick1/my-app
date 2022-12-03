@@ -1,3 +1,4 @@
+import { createReducer } from "@reduxjs/toolkit";
 
 let initialState = {
 	paths: [
@@ -13,7 +14,11 @@ let initialState = {
 		{ id: 3, imgSrc: 'https://avatars.mds.yandex.net/i?id=534a19c1077c2f438e9053210a63c1f007beb5de-5648447-images-thumbs&n=13&exp=1', name: 'Daria' },
 	]
 };
-const sidebarReducer = (state = initialState, action) => {
+const sidebarReducer = createReducer(initialState, (builder) => {
+	builder
+		.addDefaultCase((state, action) => { })
+});
+/*const sidebarReducer = (state = initialState, action) => {
 	return state;
-}
+}*/
 export default sidebarReducer;
