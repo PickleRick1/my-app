@@ -22,7 +22,6 @@ import Nav from './Nav';
 	)
 }*/
 const mapStateToProps = (state) => {
-	debugger
 	return {
 		paths: state.sidebarPage.paths,
 		friends: state.sidebarPage.friends

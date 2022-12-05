@@ -7,6 +7,7 @@ let initialState = {
 		{ id: 3, path: '/news', nameLink: 'News' },
 		{ id: 4, path: '/music', nameLink: 'Music' },
 		{ id: 5, path: '/settings', nameLink: 'Settings' },
+		{ id: 6, path: '/users', nameLink: 'Find Users' },
 	],
 	friends: [
 		{ id: 1, imgSrc: 'https://avatars.mds.yandex.net/i?id=4abb9ac3da700fdce7f32cc58eb14bb598cbe38c-7051630-images-thumbs&n=13&exp=1', name: 'Dyma' },
