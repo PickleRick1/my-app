@@ -1,5 +1,8 @@
 import s from './../Users.module.css';
-
+/*<div>
+			<p>{props.country}</p>
+			<p>{props.city}</p>
+		</div>*/
 const User = (props) => {
 	return (<div className={s.column}>
 		<div className={s.blockImg}>
@@ -10,10 +13,7 @@ const User = (props) => {
 			<p>{props.fullname}</p>
 			<p>{props.status}</p>
 		</div>
-		<div>
-			<p>{props.country}</p>
-			<p>{props.city}</p>
-		</div>
+
 	</div>)
 
 }
