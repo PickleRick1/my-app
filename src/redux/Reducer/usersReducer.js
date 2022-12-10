@@ -4,6 +4,7 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
+const SET_PRELOADER = 'SET-PRELOADER';
 let initialState = {
 	users: [
 		/*{ id: 1, follow: true, avatar: 'https://avatars.mds.yandex.net/i?id=4abb9ac3da700fdce7f32cc58eb14bb598cbe38c-7051630-images-thumbs&n=13&exp=1', fullname: 'Dmitry', status: 'Ok', location: { country: 'Belarus', city: 'Minsk' } },
@@ -12,7 +13,8 @@ let initialState = {
 	],
 	pageSize: 20,
 	totalCountPage: 0,
-	currentPage: 1
+	currentPage: 1,
+	isFetching: true
 }
 
 const usersReducer = createReducer(initialState, (builder) => {
@@ -42,6 +44,9 @@ const usersReducer = createReducer(initialState, (builder) => {
 		})
 		.addCase(SET_TOTAL_COUNT, (state, action) => {
 			state.totalCountPage = action.count;
+		})
+		.addCase(SET_PRELOADER, (state, action) => {
+			state.isFetching = action.value;
 		});
 });
 export default usersReducer;
@@ -69,5 +74,10 @@ export const setCurrentPageAC = (current) => {
 export const setTotalCountAC = (count) => {
 	return {
 		type: SET_TOTAL_COUNT, count
+	}
+}
+export const setPreloaderAC = (value) => {
+	return {
+		type: SET_PRELOADER, value
 	}
 }
