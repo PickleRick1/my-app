@@ -1,9 +1,9 @@
-import { current } from '@reduxjs/toolkit';
+
 import React from 'react';
 import axios from "axios";
 import { connect } from "react-redux";
 import Users from "./Users";
-import { followAC, unfollowAC, setUsersAC, setCurrentPageAC, setTotalCountAC, setPreloaderAC } from "../../redux/Reducer/usersReducer";
+import { follow, unfollow, setUsers, setCurrentPage, setTotalCount, setPreloader } from "../../redux/Reducer/usersReducer";
 
 import Preloader from '../common/Preloader/Preloader';
 class UsersContainer extends React.Component {
@@ -31,6 +31,7 @@ class UsersContainer extends React.Component {
 			<>{this.props.isFetching ? <Preloader /> : null}
 
 				<Users totalCount={this.props.totalCount} pageSize={this.props.pageSize} currentPage={this.props.currentPage} onPageChange={this.onPageChange} follow={this.props.follow} unfollow={this.props.unfollow} users={this.props.users} />
+
 			</>
 		)
 	}
@@ -45,7 +46,7 @@ const mapStateToProps = (state) => {
 		isFetching: state.usersPage.isFetching
 	}
 }
-const mapDispatchToProps = (dispatch) => {
+/*const mapDispatchToProps = (dispatch) => {
 	return {
 		follow: (userId) => {
 			dispatch(followAC(userId))
@@ -66,5 +67,5 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(setPreloaderAC(value))
 		}
 	}
-}
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+}*/
+export default connect(mapStateToProps, { follow, unfollow, setUsers, setCurrentPage, setTotalCount, setPreloader })(UsersContainer);

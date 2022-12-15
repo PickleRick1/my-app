@@ -1,6 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST = 'UPDATE-POST';
+const SET_PROFILE = 'SET-PROFILE';
 let initialState = {
 	posts: [
 		{ id: 1, message: 'Hey, how are you?', likeCounter: 15 },
@@ -8,6 +9,7 @@ let initialState = {
 		{ id: 3, message: "And it's my first using of props", likeCounter: 1 },
 	],
 	newPostText: '',
+	profile: null
 }
 const profileReducer = createReducer(initialState, (builder) => {
 	builder
@@ -22,6 +24,9 @@ const profileReducer = createReducer(initialState, (builder) => {
 		})
 		.addCase(UPDATE_POST, (state, action) => {
 			state.newPostText = action.newText;
+		})
+		.addCase(SET_PROFILE, (state, action) => {
+			state.profile = action.profile;
 		});
 });
 /*const profileReducer = (state = initialState, action) => {
@@ -49,6 +54,11 @@ export const addPostActionCreator = () => {
 export const updatePostActionCreator = (text) => {
 	return {
 		type: UPDATE_POST, newText: text
+	}
+}
+export const setProfile = (profile) => {
+	return {
+		type: SET_PROFILE, profile
 	}
 }
 
