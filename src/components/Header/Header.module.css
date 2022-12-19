@@ -2,7 +2,12 @@
 	grid-area: h;
 	background-color: green;
 	display: flex;
+	justify-content: space-between;
   }
   .header img{
 	
+  }
+  .loginBlock{
+	align-self: center;
+	color: blue;
   }

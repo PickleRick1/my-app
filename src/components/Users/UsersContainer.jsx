@@ -9,7 +9,9 @@ import Preloader from '../common/Preloader/Preloader';
 class UsersContainer extends React.Component {
 	componentDidMount() {
 		{ this.props.setPreloader(true) }
-		axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)
+		axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`, {
+			withCredentials: true
+		})
 			.then(response => {
 				this.props.setPreloader(false);
 				this.props.setUsers(response.data.items);
@@ -20,7 +22,9 @@ class UsersContainer extends React.Component {
 	onPageChange = (p) => {
 		{ this.props.setPreloader(true) }
 		this.props.setCurrentPage(p);
-		axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${p}`)
+		axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${p}`, {
+			withCredentials: true
+		})
 			.then(response => {
 				this.props.setPreloader(false);
 				this.props.setUsers(response.data.items)

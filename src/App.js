@@ -1,7 +1,6 @@
 
 import './App.css';
-import Profile from './components/Profile/Profile';
-import Header from './components/Header/Header';
+import HeaderContainer from './components/Header/HeaderContainer';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import { Route, Routes } from 'react-router-dom';
 import Music from './components/Music/Music';
@@ -15,14 +14,14 @@ const App = (props) => {
   return (
 
     <div className='app-wrapper'>
-      <Header />
+      <HeaderContainer />
       <NavContainer />
       {/*< />*/}
       <div className='app-wrapper-content'>
         <Routes>
 
           <Route path='/dialogs/*' element={<DialogsContainer />} />
-          <Route path='/profile/*' element={<ProfileContainer />} />
+          <Route path='/profile/:userId' element={<ProfileContainer />} />
           <Route path='/music' element={<Music />} />
           <Route path='/news' element={<News />} />
           <Route path='/settings' element={<Settings />} />
