@@ -6,18 +6,23 @@ import s from './Users.module.css';
 import userPhoto from '../../assets/images/user.png'
 
 const Users = (props) => {
-	let pageCount = Math.ceil(props.totalCount) / props.pageSize;
+	let pageCount = Math.ceil(props.totalCount) / props.pageSize; // делим общее кол-во пользователей на количество выодимых
 	let pages = [];
 	for (let i = 1; i <= pageCount; i++) {
-		pages.push(i);
+		pages.push(i); // запихиваем количество стр с деления в массив
 	}
-	let pageElements = pages.map((p, i) => {
-		return (<span className={props.currentPage === p ? s.selectedPage : undefined} onClick={(e) => { props.onPageChange(p) }}>{' ' + p + ' '}</span>)
+	let pageElements = pages.map((p, i) => { //перебор всех стр
+		return (
+			<span className=
+				{props.currentPage === p ? s.selectedPage : undefined} // если текущая стр - подсветить ее
+				onClick={(e) => { props.onPageChange(p) }}>{' ' + p + ' '}</span>) // по клику вызываем функцию onPageChange и передаем стр на какую кликнли
 
 	})
 	let userElements = props.users.map(u =>
-			<User followAC={props.follow} unfollow={props.unfollow} key={u.id} id={u.id} follow={u.follow} src={u.photos.small != null ? u.photos.small : userPhoto} fullname={u.name} status={u.status}
-			/>
+		<User followAC={props.follow} unfollow={props.unfollow} key={u.id} id={u.id} follow={u.follow}
+			src={u.photos.small != null ? u.photos.small : userPhoto} fullname={u.name} status={u.status}
+		/>//если есть срс фотки - отображаем ее, если нет - картинку что лежит в ../../assets/images/user.png
+		//перебор всех юзеров и присвоение пропсов
 
 	);
 	return (<div>

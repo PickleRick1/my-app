@@ -1,32 +1,28 @@
 
 import React from 'react';
-import axios from "axios";
 import { connect } from "react-redux";
 import { setUserData, setCurrentProfile } from '../../redux/Reducer/authReducer';
 import Header from './Header';
-import { current } from '@reduxjs/toolkit';
+import { authAPI, profileAPI } from '../../api/api';
 
 class HeaderContainer extends React.Component {
-	componentDidMount = () => {
-		axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-			withCredentials: true,
-		})
-			.then(response => {
-				if (response.data.resultCode === 0) {
-					let { id, email, login } = response.data.data;
-					this.props.setUserData(id, email, login);
-					axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + id)
-						.then(response => {
-							this.props.setCurrentProfile(response.data);
-						})
-					debugger
-				}
+	componentDidMount = () => { // компонента вмонтирована
+		authAPI.getMyProfile() // делает аякс запрос за моим айди, логином и мейлом посредством куки с апишки сервера
+			.then(data => {
+				if (data.resultCode === 0) { // если кука есть и все успешно
+					let { id, email, login } = data.data; // то раскукоживаем данные айди логина и мейла с данных сервака
+					this.props.setUserData(id, email, login); // отсылаем наши данные в стейт
+					profileAPI.getProfileOfUser(id) // делает аякс запрос за моим профилем черех айди для получения фоточек и т.д
 
+						.then(data => {
+							this.props.setCurrentProfile(data); //передаем мой профиль в стейт
+						})
+				}
 			})
 	}
 	render() {
 
-		return <Header {...this.props} />
+		return <Header {...this.props} /> // рендерим хедер, передаем профиль черех спред чтоб не писать все вручную
 	}
 }
 const mapStateToProps = (state) => {
@@ -34,6 +30,7 @@ const mapStateToProps = (state) => {
 		login: state.auth.login,
 		isAuth: state.auth.isAuth,
 		profile: state.auth.currentProfile
-	}
+	}// стейт что придет в компоненту
 }
 export default connect(mapStateToProps, { setUserData, setCurrentProfile })(HeaderContainer);
+//создание контейнерной компоненты над контейнерной чтоб делать запросы, передаем наш стейт и экшн криеторы

@@ -1,29 +1,29 @@
 
 import Profile from './Profile';
 import React from 'react';
-import axios from "axios";
 import { connect } from "react-redux";
 import { setProfile } from '../../redux/Reducer/profileReducer';
 import { useParams } from 'react-router-dom';
+import { profileAPI } from '../../api/api';
 
-export function withRouter(Children) {
+export function withRouter(Children) { // функция получения параметра с урла
 	return (props) => {
 
-		const match = { params: useParams() };
-		return <Children {...props} match={match} />
+		const match = { params: useParams() }; // присваиваем матчу объект который содержить параматры,в которых лежит айди
+		return <Children {...props} match={match} /> // передаем пропсы любой компоненте которая вызвоет эту функцию
 	}
 }
 class ProfileContainer extends React.Component {
-	componentDidMount = () => {
-		let userId = this.props.match.params.userId || 2;
-		axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-			.then(response => {
-				this.props.setProfile(response.data);
+	componentDidMount = () => { // компонента вмонтировалась
+		let userId = this.props.match.params.userId || 2; // получаем айдишник юзера,по которму мы щелкнули с урла
+		profileAPI.getProfileOfUser(userId) // получаем профиль юзера по айди
+			.then(data => { // получаем ответ
+				this.props.setProfile(data); // отсылает профиль в стор
 			})
 	}
 	render() {
 
-		return <Profile {...this.props} />
+		return <Profile {...this.props} /> // рендерим профиль, передаем профиль черех спред чтоб не писать все вручную
 	}
 }
 const mapStateToProps = (state) => {
@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
 		posts: state.profilePage.posts,
 		profile: state.profilePage.profile,
 		newPostText: state.profilePage.newPostText
-	}
+	} // стейт что придет в компоненту
 }
 export default connect(mapStateToProps, { setProfile })(withRouter(ProfileContainer));
+//создание контейнерной компоненты над контейнерной чтоб делать запросы, передаем наш стейт и экшн криеторы

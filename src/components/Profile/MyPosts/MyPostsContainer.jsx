@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
 	return {
 		posts: state.profilePage.posts,
 		newPostText: state.profilePage.newPostText
-	}
+	} // стейт что придет в компоненту
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -30,8 +30,9 @@ const mapDispatchToProps = (dispatch) => {
 		updatePost: (text) => {
 			dispatch(updatePostActionCreator(text));
 		}
-	}
+	} //  диспатчи что придетут в компоненту и которые надо будет поправить
 }
 
 const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
 export default MyPostsContainer;
+//делаем контейнерную компоненту,чтоб презентационная меньше знала стейте

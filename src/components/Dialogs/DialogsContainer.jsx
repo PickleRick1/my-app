@@ -19,7 +19,7 @@ import Dialogs from './Dialogs';
 const mapStateToProps = (state) => {
 	return {
 		dialogsPage: state.dialogsPage
-	}
+	}// стейт что придет в компоненту
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -29,7 +29,8 @@ const mapDispatchToProps = (dispatch) => {
 		updateMessage: (text) => {
 			dispatch(updateMessageAcrionCreator(text));
 		}
-	}
+	} //  диспатчи что придетут в компоненту и которые надо будет поправить
 }
 const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
 export default DialogsContainer;
+//делаем контейнерную компоненту,чтоб презентационная меньше знала стейте

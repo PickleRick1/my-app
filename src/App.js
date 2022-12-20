@@ -16,12 +16,11 @@ const App = (props) => {
     <div className='app-wrapper'>
       <HeaderContainer />
       <NavContainer />
-      {/*< />*/}
       <div className='app-wrapper-content'>
         <Routes>
 
-          <Route path='/dialogs/*' element={<DialogsContainer />} />
-          <Route path='/profile/:userId' element={<ProfileContainer />} />
+          <Route path='/dialogs/*' element={<DialogsContainer />} /> {/* роуты нужны чтоб попадать на типа другие стр, но по сути менять урл, звезда нужна что мы оставались на том же урле, но могли к нему чет добавить типа диалог/1*/}
+          <Route path='/profile/:userId' element={<ProfileContainer />} />{/* userID - переменная которую мы хотим получить с урла*/}
           <Route path='/music' element={<Music />} />
           <Route path='/news' element={<News />} />
           <Route path='/settings' element={<Settings />} />

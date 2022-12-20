@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-const ADD_POST = 'ADD-POST';
+const ADD_POST = 'ADD-POST'; //типы для формирования экшена
 const UPDATE_POST = 'UPDATE-POST';
 const SET_PROFILE = 'SET-PROFILE';
 let initialState = {
@@ -11,21 +11,21 @@ let initialState = {
 	newPostText: '',
 	profile: null
 }
-const profileReducer = createReducer(initialState, (builder) => {
+const profileReducer = createReducer(initialState, (builder) => { // создаем редьюсер
 	builder
-		.addCase(ADD_POST, (state, action) => {
+		.addCase(ADD_POST, (state, action) => { // формирует новый пост котрый добавится на стену
 			let newPost = {
 				id: 4,
-				message: state.newPostText,
+				message: state.newPostText, // передаем тест который хранили ранее
 				likeCounter: 0
 			}
-			state.posts.push(newPost);
-			state.newPostText = '';
+			state.posts.push(newPost); //добавляем пост
+			state.newPostText = ''; // очищаем поле для ввода
 		})
-		.addCase(UPDATE_POST, (state, action) => {
+		.addCase(UPDATE_POST, (state, action) => { // добавляет каждый символ в наше поле для хранения нового текста для поста
 			state.newPostText = action.newText;
 		})
-		.addCase(SET_PROFILE, (state, action) => {
+		.addCase(SET_PROFILE, (state, action) => { // устанавливает профиль с сервака на который мы щелкнули на UI
 			state.profile = action.profile;
 		});
 });
@@ -46,17 +46,18 @@ const profileReducer = createReducer(initialState, (builder) => {
 		default: return state;
 	}
 }*/
-export const addPostActionCreator = () => {
+// экшн криеторы для передачи экшена дальше в редьсер
+export const addPostActionCreator = () => { // добавляет пост на стр
 	return {
 		type: ADD_POST
 	}
 }
-export const updatePostActionCreator = (text) => {
+export const updatePostActionCreator = (text) => { // присылает обновленное слово с инпута
 	return {
 		type: UPDATE_POST, newText: text
 	}
 }
-export const setProfile = (profile) => {
+export const setProfile = (profile) => { // присылает профиль с сервака
 	return {
 		type: SET_PROFILE, profile
 	}

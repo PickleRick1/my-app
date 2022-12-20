@@ -15,7 +15,8 @@ root.render(
 	<React.StrictMode>
 
 		<BrowserRouter>
-			<Provider store={store}>
+			<Provider store={store}>  {// ложим store в контекст чтоб нижестоящие по дереву компоненты могли пользоваться стором
+			}
 				<App />
 			</Provider>
 		</BrowserRouter>

@@ -2,7 +2,7 @@
 import s from './ProfileInfo.module.css';
 import Preloader from '../../common/Preloader/Preloader';
 const ProfileInfo = (props) => {
-	if (!props.profile) {
+	if (!props.profile) { // если профиль налл или андефайнд показываем крутилку
 		return <Preloader />
 	}
 	return (
@@ -10,7 +10,7 @@ const ProfileInfo = (props) => {
 			<div>
 				<img className={s.wrapper__image} src="https://avatars.mds.yandex.net/i?id=ac60c484f2b28bbad74fb98a161220753732fb0e-4360535-images-thumbs&n=13" alt="img" />
 			</div>
-			<div className={s.profile__image}>
+			<div className={s.profile__image}> {/* отображаем профиль из пропсов */}
 				<div ><img src={props.profile.photos.large} alt="" /></div>
 				<div><p>{props.profile.fullName}</p></div>
 				<div><p>{props.profile.lookingForAJob}</p></div>

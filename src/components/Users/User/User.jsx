@@ -1,50 +1,41 @@
 import React from 'react';
-import axios from "axios";
 import s from './../Users.module.css';
 import { NavLink } from "react-router-dom";
+import { usersAPI } from '../../../api/api';
 /*<div>
 			<p>{props.country}</p>
 			<p>{props.city}</p>
 		</div>*/
 const User = (props) => {
-	debugger
 	return (<div className={s.column}>
 		<div className={s.blockImg}>
-			<NavLink to={'/profile/' + props.id}>
+			<NavLink to={'/profile/' + props.id}> {/* Ссылка на которую если щелкнуть - перейдем на профиль юзера*/}
 				<img className={s.image} src={props.src} alt="img" />
 			</NavLink >
 
-			{props.follow ? <button onClick={
+			{props.follow ? <button onClick={ // проверямем если фоллоу тру - тогда по клику 
 				() => {
-					axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/` + props.id, {
-						withCredentials: true,
-						headers: {
-							'API-KEY': '44a9282e-f707-41c4-819b-8a4741c1243e'
-						}
-					})
-						.then(response => {
-							if (response.data.resultCode === 0) {
-								props.unfollow(props.id)
+					usersAPI.unfollowUser(props.id) // делаем запрос на сервак, передаем айди юзера
+						.then(data => { // получаем ответ
+							if (data.resultCode === 0) { // если ответ пришел
+								props.unfollow(props.id) // отписываемся, в редьюсере присвоим фолс
 							}
 						})
 
-				}}>Unfollow</button> : <button onClick={
+				}}>Unfollow</button> //если фоллоу тру то кнопка будет анфоллоу
+				: <button onClick={ // если фоллоу фолс  - тогда по клику 
 					() => {
-						axios.post(`https://social-network.samuraijs.com/api/1.0//follow/` + props.id, {}, {
-							withCredentials: true,
-							headers: {
-								'API-KEY': '44a9282e-f707-41c4-819b-8a4741c1243e'
-							}
-						})
-							.then(response => {
-								if (response.data.resultCode === 0) {
-									props.followAC(props.id);
+						usersAPI.followUser(props.id) // делаем запрос на сервак, передаем айди юзера
+							.then(data => { // получаем ответ
+								if (data.resultCode === 0) { // если ответ пришел
+									props.followAC(props.id);  // подписываемся, в редьюсере присвоим тру
 								}
 							})
-					}}>follow</button>}
+					}}>follow</button> //если фоллоу фолс то кнопка будет фоллоу
+				} 
 		</div>
 		<div>
-			<NavLink to={'/profile/' + props.id}>
+			<NavLink to={'/profile/' + props.id}> {/* Ссылка на которую если щелкнуть - перейдем на профиль юзера*/}
 				<p>{props.fullname}</p>
 				<p>{props.status}</p>
 			</NavLink >
