@@ -1,4 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
+import { profileAPI } from '../../api/api';
 const ADD_POST = 'ADD-POST'; //типы для формирования экшена
 const UPDATE_POST = 'UPDATE-POST';
 const SET_PROFILE = 'SET-PROFILE';
@@ -60,6 +61,14 @@ export const updatePostActionCreator = (text) => { // присылает обн�
 export const setProfile = (profile) => { // присылает профиль с сервака
 	return {
 		type: SET_PROFILE, profile
+	}
+}
+export const getProfile = (userId) => { // thunkCrеator который делает связанные мелкие диспатчи и отсылает в дал запрос
+	return (dispatch) => {
+		profileAPI.getProfileOfUser(userId) // получаем профиль юзера по айди
+			.then(data => { // получаем ответ
+				dispatch(setProfile(data)); // отсылает профиль в стор
+			})
 	}
 }
 

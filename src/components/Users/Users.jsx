@@ -1,7 +1,7 @@
 
 import User from "./User/User";
 import React from 'react';
-import axios from "axios";
+
 import s from './Users.module.css';
 import userPhoto from '../../assets/images/user.png'
 
@@ -19,8 +19,8 @@ const Users = (props) => {
 
 	})
 	let userElements = props.users.map(u =>
-		<User followAC={props.follow} unfollow={props.unfollow} key={u.id} id={u.id} follow={u.follow}
-			src={u.photos.small != null ? u.photos.small : userPhoto} fullname={u.name} status={u.status}
+		<User follow={props.follow} unfollow={props.unfollow} key={u.id} user={u} src={u.photos.small != null ? u.photos.small : userPhoto} followingInProgress={props.followingInProgress}
+
 		/>//если есть срс фотки - отображаем ее, если нет - картинку что лежит в ../../assets/images/user.png
 		//перебор всех юзеров и присвоение пропсов
 

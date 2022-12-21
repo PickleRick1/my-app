@@ -1,4 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
+import { authAPI, profileAPI } from '../../api/api';
 //типы для формирования экшена
 const SET_USER_DATA = 'SET-USER-DATA';
 const SET_CURRENT_PROFILE = 'CURRENT-PROFILE';
@@ -34,4 +35,21 @@ export const setCurrentProfile = (profile) => {  // присылает проф�
 		type: SET_CURRENT_PROFILE, profile
 	}
 }
+
+export const getMyProfile = () => { // thunkCrеator который делает связанные мелкие диспатчи и отсылает в дал запрос
+	return (dispatch) => {
+		authAPI.getMyProfile() // делает аякс запрос за моим айди, логином и мейлом посредством куки с апишки сервера
+			.then(data => {
+				if (data.resultCode === 0) { // если кука есть и все успешно
+					let { id, email, login } = data.data; // то раскукоживаем данные айди логина и мейла с данных сервака
+					dispatch(setUserData(id, email, login)); // отсылаем наши данные в стейт
+					profileAPI.getProfileOfUser(id) // делает аякс запрос за моим профилем черех айди для получения фоточек и т.д
+						.then(data => {
+							dispatch(setCurrentProfile(data)); //передаем мой профиль в стейт
+						})
+				}
+			})
+	}
+}
+
 export default authReducer;

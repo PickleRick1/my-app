@@ -17,15 +17,9 @@ export const usersAPI = { // вызывается в страничке юзер
 	},
 	unfollowUser(id) {  // получаем id пользователя, от которого по сути хотим отписаться, но в реале удаляем его 
 		return instance.delete(`follow/` + id)
-			.then(response => {
-				return response.data; // промис для передачи меньшего кол-ва данных
-			})
 	},
 	followUser(id) {
-		return instance.post(`follow/` + id, {}) // получаем id пользователя на которого хотим подписаться
-			.then(response => {
-				return response.data; // промис для передачи меньшего кол-ва данных
-			})
+		return instance.post(`follow/` + id) // получаем id пользователя на которого хотим подписаться
 	}
 }
 export const profileAPI = { // вызывается в страничке профиля
