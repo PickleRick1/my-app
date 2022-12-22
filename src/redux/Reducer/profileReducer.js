@@ -10,7 +10,7 @@ let initialState = {
 		{ id: 3, message: "And it's my first using of props", likeCounter: 1 },
 	],
 	newPostText: '',
-	profile: null
+	profile: null,
 }
 const profileReducer = createReducer(initialState, (builder) => { // создаем редьюсер
 	builder

@@ -4,7 +4,8 @@ import React from 'react';
 import { connect } from "react-redux";
 import { getProfile } from '../../redux/Reducer/profileReducer';
 import { useParams } from 'react-router-dom';
-
+import { withAuthNavigate } from '../hoc/withAuthNavigate';
+import { compose } from 'redux';
 
 export function withRouter(Children) { // функция получения параметра с урла
 	return (props) => {
@@ -27,8 +28,17 @@ const mapStateToProps = (state) => {
 	return {
 		posts: state.profilePage.posts,
 		profile: state.profilePage.profile,
-		newPostText: state.profilePage.newPostText
+		newPostText: state.profilePage.newPostText,
+		isAuth: state.auth.isAuth,
 	} // стейт что придет в компоненту
 }
-export default connect(mapStateToProps, { getProfile })(withRouter(ProfileContainer));
+
+
+export default compose(
+	connect(mapStateToProps, { getProfile }),
+	withRouter,
+	withAuthNavigate
+)(ProfileContainer); // composе нужен чтоб избавиться от переменных, в которые оборачивалась б помтоянно компонента. Так у нас есть только один метод,который 2 параментром передает компоненту, а 1 все дейсвтия что будут сделаны над ней.
+
+/*connect(mapStateToProps, { getProfile })(withRouter(withNavigate));*/
 //создание контейнерной компоненты над контейнерной чтоб делать запросы, передаем наш стейт и экшн криеторы
