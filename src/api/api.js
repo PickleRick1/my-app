@@ -28,6 +28,18 @@ export const profileAPI = { // вызывается в страничке про
 			.then(response => {
 				return response.data; // промис для передачи меньшего кол-ва данных
 			})
+	},
+	getStatusOfUser(id) { // получаем профиль того юзера,айди которого пришел к нам с юрл,
+		return instance.get(`profile/status/` + id)
+			.then(response => {
+				return response.data; // промис для передачи меньшего кол-ва данных
+			})
+	},
+	updateStatusOfUser(status) { // получаем профиль того юзера,айди которого пришел к нам с юрл,
+		return instance.put(`profile/status`, { status })
+			.then(response => {
+				return response.data; // промис для передачи меньшего кол-ва данных
+			})
 	}
 }
 export const authAPI = { // вызывается в страничке хедера

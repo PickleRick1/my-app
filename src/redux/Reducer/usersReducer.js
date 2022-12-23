@@ -13,7 +13,7 @@ let initialState = {  // изначальные данные в сторе
 		{ id: 2, follow: false, avatar: 'https://avatars.mds.yandex.net/i?id=2f6e1ffd3b455abccb3158f5114c38f20b7596fa-4428480-images-thumbs&n=13&exp=1', fullname: 'Elena', status: 'Ok', location: { country: 'Russia', city: 'Simpheropol' } },
 		{ id: 3, follow: true, avatar: 'https://avatars.mds.yandex.net/i?id=534a19c1077c2f438e9053210a63c1f007beb5de-5648447-images-thumbs&n=13&exp=1', fullname: 'Lesya', status: 'Ok', location: { country: 'Russia', city: 'Yenakievo' } },*/
 	],
-	pageSize: 5,  // количество сколько придет пользователей с сервака
+	pageSize: 20,  // количество сколько придет пользователей с сервака
 	totalCountPage: 0, // сколько всего пользоватей на сервере
 	currentPage: 1,  // стартовая страничка ответа сервака 
 	isFetching: true, // отображать ли крутилку загрузки
