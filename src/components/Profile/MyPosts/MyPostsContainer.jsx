@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { addPostActionCreator, updatePostActionCreator } from '../../../redux/Reducer/profileReducer'
+import { addPostActionCreator} from '../../../redux/Reducer/profileReducer'
 import MyPosts from './MyPosts';
 
 /*const MyPostsContainer = (props) => {
@@ -24,12 +24,9 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
-		sendPost: () => {
-			dispatch(addPostActionCreator());
+		sendPost: (newPostBody) => {
+			dispatch(addPostActionCreator(newPostBody));
 		},
-		updatePost: (text) => {
-			dispatch(updatePostActionCreator(text));
-		}
 	} //  диспатчи что придетут в компоненту и которые надо будет поправить
 }
 

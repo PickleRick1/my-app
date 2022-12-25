@@ -1,7 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { profileAPI } from '../../api/api';
 const ADD_POST = 'ADD-POST'; //типы для формирования экшена
-const UPDATE_POST = 'UPDATE-POST';
 const SET_PROFILE = 'SET-PROFILE';
 const SET_STATUS = 'SET-STATUS';
 let initialState = {
@@ -10,7 +9,6 @@ let initialState = {
 		{ id: 2, message: "It's me first program", likeCounter: 23 },
 		{ id: 3, message: "And it's my first using of props", likeCounter: 1 },
 	],
-	newPostText: '',
 	profile: null,
 	status: ''
 }
@@ -19,14 +17,10 @@ const profileReducer = createReducer(initialState, (builder) => { // созда�
 		.addCase(ADD_POST, (state, action) => { // формирует новый пост котрый добавится на стену
 			let newPost = {
 				id: 4,
-				message: state.newPostText, // передаем тест который хранили ранее
+				message: action.newPostBody, // передаем тест который хранили ранее
 				likeCounter: 0
 			}
 			state.posts.push(newPost); //добавляем пост
-			state.newPostText = ''; // очищаем поле для ввода
-		})
-		.addCase(UPDATE_POST, (state, action) => { // добавляет каждый символ в наше поле для хранения нового текста для поста
-			state.newPostText = action.newText;
 		})
 		.addCase(SET_PROFILE, (state, action) => { // устанавливает профиль с сервака на который мы щелкнули на UI
 			state.profile = action.profile;
@@ -53,14 +47,9 @@ const profileReducer = createReducer(initialState, (builder) => { // созда�
 	}
 }*/
 // экшн криеторы для передачи экшена дальше в редьсер
-export const addPostActionCreator = () => { // добавляет пост на стр
+export const addPostActionCreator = (newPostBody) => { // добавляет пост на стр
 	return {
-		type: ADD_POST
-	}
-}
-export const updatePostActionCreator = (text) => { // присылает обновленное слово с инпута
-	return {
-		type: UPDATE_POST, newText: text
+		type: ADD_POST, newPostBody
 	}
 }
 export const setProfile = (profile) => { // присылает профиль с сервака
@@ -95,7 +84,6 @@ export const updateStatus = (status) => { // thunkCrеator который дел
 			.then(data => {
 				if (data.resultCode === 0) {
 					dispatch(setStatus(status));
-					debugger
 				}// получаем ответ
 				// отсылает профиль в стор
 			})

@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { addMessageAcrionCreator, updateMessageAcrionCreator } from '../../redux/Reducer/dialogsReducer';
+import { addMessageAcrionCreator } from '../../redux/Reducer/dialogsReducer';
 import { withAuthNavigate } from '../hoc/withAuthNavigate';
 import Dialogs from './Dialogs';
 
@@ -26,12 +26,9 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
-		sendMessage: () => {
-			dispatch(addMessageAcrionCreator());
+		sendMessage: (newMessageBody) => {
+			dispatch(addMessageAcrionCreator(newMessageBody));
 		},
-		updateMessage: (text) => {
-			dispatch(updateMessageAcrionCreator(text));
-		}
 	} //  диспатчи что придетут в компоненту и которые надо будет поправить
 }
 
