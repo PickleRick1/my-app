@@ -3,11 +3,14 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { maxLength, required } from '../../utils/validations';
+import { FormControl } from '../../FormControls/FormControls';
+const maxLength20 = maxLength(20);
 const ProfileTextarea = (props) => {
 	return (
 		<form onSubmit={props.handleSubmit}>
 			<div>
-				<Field name='newPostBody' component={'textarea'} /></div>
+				<Field name='newPostBody' component={FormControl} validate={[required, maxLength20]} placeholder='Post message' fieldType={'textarea'} /></div>
 			{/*onChange вызывает колбек при каждом изменении поля ввода,то есть на каждый символ. Велью - прошитое поле,еоторое лежит в стейте и меняется на каждый символ */}
 			<div><button>Add post</button></div>
 		</form>

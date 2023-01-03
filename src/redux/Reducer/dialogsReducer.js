@@ -1,7 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 //типы для формирования экшена
 const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_MESSAGE = 'UPDATE-MESSAGE';
 let initialState = {
 	dialogs: [ // массив диалогов
 		{ id: 1, name: 'Dyma' },
