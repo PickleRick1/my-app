@@ -49,10 +49,16 @@ export const authAPI = { // вызывается в страничке хеде�
 				return response.data; // промис для передачи меньшего кол-ва данных
 			})
 	},
-	logOut(login, password) {  // получаем id пользователя, от которого по сути хотим отписаться, но в реале удаляем его 
+	logout() {  // не передаем инф, все лежит в куке
 		return instance.delete(`/auth/login/`)
+			.then(response => {
+				return response.data; // промис для передачи меньшего кол-ва данных
+			})
 	},
-	logIn(login, password) {
-		return instance.post(`/auth/login`, { login, password }) // получаем id пользователя на которого хотим подписаться
+	login(email, password, rememberMe = false) {
+		return instance.post(`/auth/login`, { email, password, rememberMe })
+			.then(response => {
+				return response.data; // промис для передачи меньшего кол-ва данных
+			})
 	}
 }

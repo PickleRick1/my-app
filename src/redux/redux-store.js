@@ -4,7 +4,8 @@ import profileReducer from "./Reducer/profileReducer";
 import sidebarReducer from "./Reducer/sidebarReducer";
 import usersReducer from "./Reducer/usersReducer";
 import authReducer from "./Reducer/authReducer";
-import {reducer as formReducer} from 'redux-form';
+import appReducer from "./Reducer/appReducer";
+import { reducer as formReducer } from 'redux-form';
 
 let store = configureStore({  // стор через тулкит
 	reducer: {
@@ -14,6 +15,7 @@ let store = configureStore({  // стор через тулкит
 		usersPage: usersReducer,
 		auth: authReducer,
 		form: formReducer,
+		app: appReducer
 	}
 })
 window.store = store; // чтоб видеть стор в консольке

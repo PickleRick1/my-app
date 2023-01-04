@@ -16,10 +16,11 @@ const ProfileTextarea = (props) => {
 		</form>
 	)
 }
+const ProfileReduxTextarea = reduxForm({ form: 'profilePost' })(ProfileTextarea);
 const MyPosts = (props) => {
 
 	/*onChange={onMessageChange} value={props.dialogsPage.newMessageText} onClick={addMessage}*/
-	const ProfileReduxTextarea = reduxForm({ form: 'profilePost' })(ProfileTextarea);
+
 	let postElements = props.posts.map(p => <Post message={p.message} likeCounter={p.likeCounter} />); // перебиврает все элементы и добавляет каждому пропсы
 	let addPost = (values) => {
 		props.sendPost(values.newPostBody); // функция из пропсов ,которая вызовет экшн криетор,где редьюсер добавит новый пост

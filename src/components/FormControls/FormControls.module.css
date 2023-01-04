@@ -1,8 +1,13 @@
 .formControl{
-	
+
 }
 
 .formControl.error input,
 .formControl.error textarea{
 border: 2px solid black;
 } 
+
+.formSummaryerror{
+border:  2px solid black;
+color: white;
+}
