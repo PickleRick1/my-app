@@ -3,8 +3,8 @@ import React from 'react';
 import { connect } from "react-redux";
 import Users from "./Users";
 import { follow, unfollow, setCurrentPage, getUsers } from "../../redux/Reducer/usersReducer";
-
 import Preloader from '../common/Preloader/Preloader';
+import { getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, getTotalCountPage, recieveUsers } from '../../redux/users-selectors';
 class UsersContainer extends React.Component {
 	componentDidMount() {
 		this.props.getUsers(this.props.pageSize, this.props.currentPage); // отправляем запрос в блл который там санку делает
@@ -26,12 +26,12 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		users: state.usersPage.users,
-		currentPage: state.usersPage.currentPage,
-		totalCount: state.usersPage.totalCountPage,
-		pageSize: state.usersPage.pageSize,
-		isFetching: state.usersPage.isFetching,
-		followingInProgress: state.usersPage.followingInProgress
+		users: recieveUsers(state),
+		currentPage: getCurrentPage(state),
+		totalCount: getTotalCountPage(state),
+		pageSize: getPageSize(state),
+		isFetching: getIsFetching(state),
+		followingInProgress: getFollowingInProgress(state)
 	} // стейт для пропсов,что мы хотим передать в компоненту
 }
 /*const mapDispatchToProps = (dispatch) => {
