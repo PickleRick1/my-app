@@ -63,30 +63,24 @@ export const setStatus = (status) => { // присылает профиль с �
 	}
 }
 export const getProfile = (userId) => { // thunkCrеator который делает связанные мелкие диспатчи и отсылает в дал запрос
-	return (dispatch) => {
-		profileAPI.getProfileOfUser(userId) // получаем профиль юзера по айди
-			.then(data => { // получаем ответ
+	return async (dispatch) => {
+		let data = await profileAPI.getProfileOfUser(userId) // получаем профиль юзера по айди
 				dispatch(setProfile(data)); // отсылает профиль в стор
-			})
 	}
 }
 export const getStatus = (userId) => { // thunkCrеator который делает связанные мелкие диспатчи и отсылает в дал запрос
-	return (dispatch) => {
-		profileAPI.getStatusOfUser(userId) // получаем профиль юзера по айди
-			.then(data => { // получаем ответ
+	return async (dispatch) => {
+		let data = await profileAPI.getStatusOfUser(userId) // получаем профиль юзера по айди
 				dispatch(setStatus(data)); // отсылает профиль в стор
-			})
 	}
 }
 export const updateStatus = (status) => { // thunkCrеator который делает связанные мелкие диспатчи и отсылает в дал запрос
-	return (dispatch) => {
-		profileAPI.updateStatusOfUser(status) // получаем профиль юзера по айди
-			.then(data => {
-				if (data.resultCode === 0) {
-					dispatch(setStatus(status));
-				}// получаем ответ
-				// отсылает профиль в стор
-			})
+	return async (dispatch) => {
+		let data = await profileAPI.updateStatusOfUser(status) // получаем профиль юзера по айди
+		if (data.resultCode === 0) {
+			dispatch(setStatus(status));
+		}// получаем ответ
+		// отсылает профиль в стор
 	}
 }
 export default profileReducer;

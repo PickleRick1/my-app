@@ -1,5 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { usersAPI } from '../../api/api';
+import { updateObjectInArray } from "../../components/utils/helper";
 const FOLLOW = 'FOLLOW';  //типы для формирования экшена
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
@@ -22,22 +23,28 @@ let initialState = {  // изначальные данные в сторе
 
 const usersReducer = createReducer(initialState, (builder) => { // создаем редьюсер
 	builder
-		.addCase(FOLLOW, (state, action) => { // случай когда приходит тип *подписка*
-			state.users.map(u => {
+		.addCase(FOLLOW, (state, action) => {
+			return {
+				users: updateObjectInArray(state.users, action.userId, 'id', { follow: true })
+			}// случай когда приходит тип *подписка*
+			/*state.users.map(u => {
 				if (u.id === action.userId) { //перебиваем всех юзеров и ищем пришеднший айди
 					return u.follow = true; // подписываемся на пришедший с экшн криетора айди
 				}
 				return u;
-			})
+			})*/
 
 		})
 		.addCase(UNFOLLOW, (state, action) => {  // случай когда приходит тип *отписка*
-			state.users.map(u => {
+			return {
+				users: updateObjectInArray(state.users, action.userId, 'id', { follow: false })
+			}
+			/*state.users.map(u => {
 				if (u.id === action.userId) {//перебиваем всех юзеров и ищем пришеднший айди
 					return u.follow = false; // отписываемся на пришедший с экшн криетора айди
 				}
 				return u;
-			})
+			})*/
 		})
 		.addCase(SET_USERS, (state, action) => { // случай когда приходит тип *доставания юзеров с сервака*
 			state.users = action.users;  // добавляем пришедших с экшн криетора юзеров
@@ -98,39 +105,31 @@ export const toggleFollowingInProgress = (isWorking, id) => { //передает
 		type: TOGGLE_FOLLOWING_IN_PROGRESS, isWorking, id
 	}
 }
-
+const funcFollowUnwollow = async (dispatch, userId, APImethod, actionCreator) => {
+	dispatch(toggleFollowingInProgress(true, userId));
+	let responce = await APImethod(userId); // делаем запрос на сервак, передаем айди юзера
+	if (responce.data.resultCode === 0) { // если ответ пришел
+		dispatch(actionCreator(userId)) //подписываемся, в редьюсере присвоим фолс
+	}
+	dispatch(toggleFollowingInProgress(false, userId));
+}
 export const getUsers = (pageSize, currentPage) => { // thunkCrеator который делает связанные мелкие диспатчи и отсылает в дал запрос
-	return (dispatch) => {
+	return async (dispatch) => {
 		dispatch(setPreloader(true));  //вызываем крутилку
-		usersAPI.getUsers(pageSize, currentPage) // запрос на сервак чтоб получить юзеров
-			.then(data => {
-				dispatch(setPreloader(false)); //убираем крутилку
-				dispatch(setUsers(data.items)); // добавляем юзеров в наш стор
-				dispatch(setTotalCount(data.totalCount));// добавляем кол-во пользователей в стор
-			})
+		let data = await usersAPI.getUsers(pageSize, currentPage); // запрос на сервак чтоб получить юзеров
+		dispatch(setPreloader(false)); //убираем крутилку
+		dispatch(setUsers(data.items)); // добавляем юзеров в наш стор
+		dispatch(setTotalCount(data.totalCount));// добавляем кол-во пользователей в стор
 	}
 }
 export const unfollow = (userId) => { // thunkCrеator который делает связанные мелкие диспатчи и отсылает в дал запрос
-	return (dispatch) => {
-		dispatch(toggleFollowingInProgress(true, userId));
-		usersAPI.unfollowUser(userId) // делаем запрос на сервак, передаем айди юзера
-			.then(responce => { // получаем ответ
-				if (responce.data.resultCode === 0) { // если ответ пришел
-					dispatch(unfollowSuccess(userId)) // отписываемся, в редьюсере присвоим фолс
-				}
-				dispatch(toggleFollowingInProgress(false, userId));
-			})
+	return async (dispatch) => {
+		funcFollowUnwollow(dispatch, userId, usersAPI.unfollowUser.bind(usersAPI), unfollowSuccess)
 	}
 }
 export const follow = (userId) => { // thunkCrеator который делает связанные мелкие диспатчи и отсылает в дал запрос
-	return (dispatch) => {
-		dispatch(toggleFollowingInProgress(true, userId));
-		usersAPI.followUser(userId) // делаем запрос на сервак, передаем айди юзера
-			.then(responce => { // получаем ответ
-				if (responce.data.resultCode === 0) { // если ответ пришел
-					dispatch(followSuccess(userId)) //подписываемся, в редьюсере присвоим фолс
-				}
-				dispatch(toggleFollowingInProgress(false, userId));
-			})
+	return async (dispatch) => {
+		funcFollowUnwollow(dispatch, userId, usersAPI.followUser.bind(usersAPI), followSuccess)
 	}
 }
+
