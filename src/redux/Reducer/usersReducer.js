@@ -25,8 +25,11 @@ const usersReducer = createReducer(initialState, (builder) => { // создае�
 	builder
 		.addCase(FOLLOW, (state, action) => {
 			return {
-				users: updateObjectInArray(state.users, action.userId, 'id', { follow: true })
-			}// случай когда приходит тип *подписка*
+				...state,
+				users: updateObjectInArray(state.users, action.userId, 'id', { followed: true })
+			}
+
+			// случай когда приходит тип *подписка*
 			/*state.users.map(u => {
 				if (u.id === action.userId) { //перебиваем всех юзеров и ищем пришеднший айди
 					return u.follow = true; // подписываемся на пришедший с экшн криетора айди
@@ -37,7 +40,8 @@ const usersReducer = createReducer(initialState, (builder) => { // создае�
 		})
 		.addCase(UNFOLLOW, (state, action) => {  // случай когда приходит тип *отписка*
 			return {
-				users: updateObjectInArray(state.users, action.userId, 'id', { follow: false })
+				...state,
+				users: updateObjectInArray(state.users, action.userId, 'id', { followed: false })
 			}
 			/*state.users.map(u => {
 				if (u.id === action.userId) {//перебиваем всех юзеров и ищем пришеднший айди
